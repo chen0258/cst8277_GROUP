@@ -136,17 +136,6 @@ public class ACMEMedicalService implements Serializable {
         userForNewPhysician.setPwHash(pwHash);
         userForNewPhysician.setPhysician(newPhysician);
         /* TODO ACMECS01 - Use NamedQuery on SecurityRole to find USER_ROLE */ 
-        
-//        TypedQuery<SecurityRole> query = em.createNamedQuery("SecurityRole.findByName", SecurityRole.class);
-//		query.setParameter(PARAM1, USER_ROLE);
-//		SecurityRole userRole = query.getSingleResult();
-		
-//        SecurityRole userRole = em.createNamedQuery("SecurityRole.findByName", SecurityRole.class)
-//        	    .setParameter("param1", USER_ROLE)
-//        	    .getSingleResult();
-//        userForNewPhysician.getRoles().add(userRole);
-//        userRole.getUsers().add(userForNewPhysician);
-//        em.persist(userForNewPhysician);
         TypedQuery<SecurityRole> query = em.createNamedQuery(SecurityRole.ROLE_BY_NAME_QUERY, SecurityRole.class);
 		query.setParameter(PARAM1, USER_ROLE);
 		SecurityRole userRole = query.getSingleResult();
@@ -618,6 +607,12 @@ public class ACMEMedicalService implements Serializable {
 			Patient patientToBeUpdated = getPatientById(id);
 			if (patientToBeUpdated != null) {
 				em.refresh(patientToBeUpdated);
+				patientToBeUpdated.setFirstName(updatedPatient.getFirstName());
+				patientToBeUpdated.setLastName(updatedPatient.getLastName());
+				patientToBeUpdated.setYear(updatedPatient.getYear());
+				patientToBeUpdated.setWeight(updatedPatient.getWeight());
+				patientToBeUpdated.setHeight(updatedPatient.getHeight());
+				patientToBeUpdated.setSmoker(updatedPatient.getSmoker());
 				em.merge(patientToBeUpdated);
 				em.flush();
 			}
