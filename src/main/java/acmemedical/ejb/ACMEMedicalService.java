@@ -618,6 +618,12 @@ public class ACMEMedicalService implements Serializable {
 			Patient patientToBeUpdated = getPatientById(id);
 			if (patientToBeUpdated != null) {
 				em.refresh(patientToBeUpdated);
+				patientToBeUpdated.setFirstName(updatedPatient.getFirstName());
+ 				patientToBeUpdated.setLastName(updatedPatient.getLastName());
+ 				patientToBeUpdated.setYear(updatedPatient.getYear());
+ 				patientToBeUpdated.setWeight(updatedPatient.getWeight());
+ 				patientToBeUpdated.setHeight(updatedPatient.getHeight());
+ 				patientToBeUpdated.setSmoker(updatedPatient.getSmoker());
 				em.merge(patientToBeUpdated);
 				em.flush();
 			}
